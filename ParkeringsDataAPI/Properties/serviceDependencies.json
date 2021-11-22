@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "Server=tcp:emilzealanddb.database.windows.net,1433;InitialCatalog=ParkeringsDataDb;PersistSecurityInfo=False;UserID=emiladmin;Password={Sql12345};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;"
+    }
+  }
+}

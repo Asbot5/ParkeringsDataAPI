@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/emilzealanddb/databases/ParkeringsDataDb",
+      "type": "mssql.azure",
+      "connectionId": "Server=tcp:emilzealanddb.database.windows.net,1433;InitialCatalog=ParkeringsDataDb;PersistSecurityInfo=False;UserID=emiladmin;Password={Sql12345};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
