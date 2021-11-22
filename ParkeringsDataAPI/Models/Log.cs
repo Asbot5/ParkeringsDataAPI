@@ -9,11 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ParkeringsDataAPI.Models
 {
-    public partial class ParkingDatum
+    [Table("Log")]
+    public partial class Log
     {
         [Key]
-        public int Id { get; set; }
-        public int? Pladser { get; set; }
-        public int? Optagede { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime Tidspunkt { get; set; }
+        public bool? Retning { get; set; }
+        public int? Nedbør { get; set; }
+        public int? Temperatur { get; set; }
+        public int? Vindhastighed { get; set; }
     }
 }

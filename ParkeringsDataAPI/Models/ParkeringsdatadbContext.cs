@@ -18,6 +18,7 @@ namespace ParkeringsDataAPI.Models
         {
         }
 
+        public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<ParkingDatum> ParkingData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,6 +33,12 @@ namespace ParkeringsDataAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Log>(entity =>
+            {
+                entity.HasKey(e => e.Tidspunkt)
+                    .HasName("PK__Log__FBD8248DCD82CFB0");
+            });
 
             modelBuilder.Entity<ParkingDatum>(entity =>
             {
