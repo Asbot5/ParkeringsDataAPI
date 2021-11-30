@@ -18,7 +18,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ParkingData]",
+         "Name": "[dbo].[Parkeringsområde]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpecielleParkeringsPladser]",
          "ObjectType": 0
       }
    ],

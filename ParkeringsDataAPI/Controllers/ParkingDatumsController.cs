@@ -16,9 +16,9 @@ namespace ParkeringsDataAPI.Controllers
     {
         private ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
         [HttpGet]
-        public List<ParkingDatum> GetAll()
+        public List<Parkeringsområde> GetAll()
         {
-            return _db.ParkingData.ToList();
+            return _db.Parkeringsområdes.ToList();
         }
     }
 }

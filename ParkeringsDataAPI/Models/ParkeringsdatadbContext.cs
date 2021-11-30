@@ -19,7 +19,8 @@ namespace ParkeringsDataAPI.Models
         }
 
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<ParkingDatum> ParkingData { get; set; }
+        public virtual DbSet<Parkeringsområde> Parkeringsområdes { get; set; }
+        public virtual DbSet<SpecielleParkeringsPladser> SpecielleParkeringsPladsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,9 +41,16 @@ namespace ParkeringsDataAPI.Models
                     .HasName("PK__Log__FBD8248DCD82CFB0");
             });
 
-            modelBuilder.Entity<ParkingDatum>(entity =>
+            modelBuilder.Entity<SpecielleParkeringsPladser>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasKey(e => new { e.OmrådeId, e.ParkeringsType })
+                    .HasName("Clustered_Key");
+
+                entity.HasOne(d => d.Område)
+                    .WithMany(p => p.SpecielleParkeringsPladsers)
+                    .HasForeignKey(d => d.OmrådeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Location_Limit");
             });
 
             OnModelCreatingPartial(modelBuilder);
