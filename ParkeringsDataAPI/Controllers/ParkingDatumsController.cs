@@ -9,6 +9,7 @@ using ParkeringsDataAPI.Models;
 
 namespace ParkeringsDataAPI.Controllers
 {
+    // /ParkingDatum
     [Route("[controller]")]
     [ApiController]
     public class ParkingDatumsController : ControllerBase

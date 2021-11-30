@@ -8,6 +8,7 @@ using ParkeringsDataAPI.Models;
 
 namespace ParkeringsDataAPI.Controllers
 {
+    // /log
     [Route("[controller]")]
     [ApiController]
     public class LogController : ControllerBase
