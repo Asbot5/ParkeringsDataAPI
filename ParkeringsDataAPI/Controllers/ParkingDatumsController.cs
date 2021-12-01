@@ -30,7 +30,7 @@ namespace ParkeringsDataAPI.Controllers
             return _db.SpecielleParkeringsPladsers.ToList();
         }
 
-        [Route("Special/{id}")]
+        [Route("Special/{område}/{id}")]
         [HttpGet]
         public SpecielleParkeringsPladser GetAllSpecialById(int id, int område)
         {
