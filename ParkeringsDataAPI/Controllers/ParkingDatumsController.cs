@@ -32,22 +32,20 @@ namespace ParkeringsDataAPI.Controllers
 
         [Route("Special/{id}")]
         [HttpGet]
-        public IQueryable GetAllSpecialById(int id)
+        public SpecielleParkeringsPladser GetAllSpecialById(int id, int område)
         {
-        //    var s = from sp in _db.SpecielleParkeringsPladsers
-        //        where sp.OmrådeId == id
-        //        select new {sp.OmrådeId, sp.OptagedePladser, sp.ParkeringsType, sp.Pladser};
-        //    return s;
-            var s =_db.SpecielleParkeringsPladsers
-                .Where(sp => sp.OmrådeId == id)
-                .Select(sp => new {
-                    id = sp.OmrådeId,
-                    områdeId = sp.OmrådeId,
-                    pladser = sp.Pladser,
-                    optagedePladser = sp.OptagedePladser,
-                    parkeringsType = sp.ParkeringsType
-                });
-                return s;
+            return _db.SpecielleParkeringsPladsers.Find(område, id);
+            //var s =_db.SpecielleParkeringsPladsers
+            //    .Where(sp => sp.OmrådeId == id)
+            //    .Select(sp => new {
+            //        id = sp.OmrådeId,
+            //        områdeId = sp.OmrådeId,
+            //        pladser = sp.Pladser,
+            //        optagedePladser = sp.OptagedePladser,
+            //        parkeringsType = sp.ParkeringsType
+            //    });
+            //    return s;
+
         }
     }
 }
