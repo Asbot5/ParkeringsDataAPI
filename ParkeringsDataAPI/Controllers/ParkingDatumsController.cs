@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
 using ParkeringsDataAPI.Models;
@@ -17,6 +18,7 @@ namespace ParkeringsDataAPI.Controllers
     public class ParkingDatumsController : ControllerBase
     {
         private ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
+
         [HttpGet]
         public List<Parkeringsområde> GetAll()
         {
@@ -32,20 +34,30 @@ namespace ParkeringsDataAPI.Controllers
 
         [Route("Special/{område}/{id}")]
         [HttpGet]
-        public SpecielleParkeringsPladser GetAllSpecialById(int id, int område)
+        public SpecielleParkeringsPladser GetSpecialById(int område, int type)
         {
-            return _db.SpecielleParkeringsPladsers.Find(område, id);
-            //var s =_db.SpecielleParkeringsPladsers
-            //    .Where(sp => sp.OmrådeId == id)
-            //    .Select(sp => new {
-            //        id = sp.OmrådeId,
-            //        områdeId = sp.OmrådeId,
-            //        pladser = sp.Pladser,
-            //        optagedePladser = sp.OptagedePladser,
-            //        parkeringsType = sp.ParkeringsType
-            //    });
-            //    return s;
-
+            SpecielleParkeringsPladser special = new SpecielleParkeringsPladser();
+            using (SqlConnection conn = new SqlConnection(
+                    "Data Source=emilzealanddb.database.windows.net;Initial Catalog=ParkeringsDataDb;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+                {
+                    conn.Open();
+                    using (SqlCommand sql = new SqlCommand(
+                        "select * from SpecielleParkeringsPladser Where (OmrådeId = @OID) AND (ParkeringsType = @Type)",
+                        conn))
+                    {
+                        sql.Parameters.AddWithValue("@OID", område);
+                        sql.Parameters.AddWithValue("@Type", type);
+                        SqlDataReader reader = sql.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            special.OmrådeId = område;
+                            special.ParkeringsType = type;
+                            special.Pladser = reader.GetInt32(2);
+                            special.OptagedePladser = reader.GetInt32(3);
+                        }
+                    }
+                }
+            return special;
         }
     }
 }
