@@ -41,20 +41,25 @@ namespace ParkeringsDataAPI.Controllers
                     "Data Source=emilzealanddb.database.windows.net;Initial Catalog=ParkeringsDataDb;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
                 {
                     conn.Open();
-                    using (SqlCommand sql = new SqlCommand(
-                        "select * from SpecielleParkeringsPladser Where (OmrådeId = @OID)",
-                        conn))
+                    for (int i = 0; i<3; i++)
                     {
-                        sql.Parameters.AddWithValue("@OID", område);
-                        SqlDataReader reader = sql.ExecuteReader();
-                        if (reader.Read())
+                        using (SqlCommand sql = new SqlCommand(
+                            "select * from SpecielleParkeringsPladser Where (OmrådeId = @OID) AND (ParkeringsType = @Type)",
+                            conn))
                         {
-                            SpecielleParkeringsPladser special = new SpecielleParkeringsPladser();
-                            special.OmrådeId = område;
-                            special.ParkeringsType = reader.GetInt32(1);
-                            special.Pladser = reader.GetInt32(2);
-                            special.OptagedePladser = reader.GetInt32(3);
-                            liste.Add(special);
+                            sql.Parameters.AddWithValue("@OID", område);
+                            sql.Parameters.AddWithValue("@Type", i);
+
+                            SqlDataReader reader = sql.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                SpecielleParkeringsPladser special = new SpecielleParkeringsPladser();
+                                special.OmrådeId = område;
+                                special.ParkeringsType = reader.GetInt32(1);
+                                special.Pladser = reader.GetInt32(2);
+                                special.OptagedePladser = reader.GetInt32(3);
+                                liste.Add(special);
+                            }
                         }
                     }
                 }
