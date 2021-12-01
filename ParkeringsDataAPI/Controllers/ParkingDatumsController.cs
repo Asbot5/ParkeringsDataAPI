@@ -32,32 +32,33 @@ namespace ParkeringsDataAPI.Controllers
             return _db.SpecielleParkeringsPladsers.ToList();
         }
 
-        [Route("Special/{område}/{id}")]
+        [Route("Special/{område}")]
         [HttpGet]
-        public SpecielleParkeringsPladser GetSpecialById(int område, int type)
+        public List<SpecielleParkeringsPladser> GetSpecialById(int område)
         {
-            SpecielleParkeringsPladser special = new SpecielleParkeringsPladser();
+            List<SpecielleParkeringsPladser> liste = new List<SpecielleParkeringsPladser>();
             using (SqlConnection conn = new SqlConnection(
                     "Data Source=emilzealanddb.database.windows.net;Initial Catalog=ParkeringsDataDb;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
                 {
                     conn.Open();
                     using (SqlCommand sql = new SqlCommand(
-                        "select * from SpecielleParkeringsPladser Where (OmrådeId = @OID) AND (ParkeringsType = @Type)",
+                        "select * from SpecielleParkeringsPladser Where (OmrådeId = @OID)",
                         conn))
                     {
                         sql.Parameters.AddWithValue("@OID", område);
-                        sql.Parameters.AddWithValue("@Type", type);
                         SqlDataReader reader = sql.ExecuteReader();
                         if (reader.Read())
                         {
+                            SpecielleParkeringsPladser special = new SpecielleParkeringsPladser();
                             special.OmrådeId = område;
-                            special.ParkeringsType = type;
+                            special.ParkeringsType = reader.GetInt32(1);
                             special.Pladser = reader.GetInt32(2);
                             special.OptagedePladser = reader.GetInt32(3);
+                            liste.Add(special);
                         }
                     }
                 }
-            return special;
+            return liste;
         }
     }
 }
