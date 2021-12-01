@@ -20,5 +20,12 @@ namespace ParkeringsDataAPI.Controllers
         {
             return _db.Parkeringsområdes.ToList();
         }
+
+        [Route("Special")]
+        [HttpGet]
+        public List<SpecielleParkeringsPladser> GetAllSpecial()
+        {
+            return _db.SpecielleParkeringsPladsers.ToList();
+        }
     }
 }
