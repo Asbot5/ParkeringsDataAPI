@@ -13,7 +13,6 @@ namespace ParkeringsDataAPI.Controllers
     [ApiController]
     public class LogController : ControllerBase
     {
-        private ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
         [HttpGet]
         public List<Log> GetAll()
         {

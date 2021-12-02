@@ -37,8 +37,14 @@ namespace ParkeringsDataAPI.Models
 
             modelBuilder.Entity<Log>(entity =>
             {
-                entity.HasKey(e => e.Tidspunkt)
-                    .HasName("PK__Log__FBD8248DCD82CFB0");
+                entity.HasKey(e => new { e.OmrådeId, e.Tidspunkt })
+                    .HasName("Clustered1_Key");
+
+                entity.HasOne(d => d.Område)
+                    .WithMany(p => p.Logs)
+                    .HasForeignKey(d => d.OmrådeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Location1_Limit");
             });
 
             modelBuilder.Entity<SpecielleParkeringsPladser>(entity =>

@@ -13,11 +13,33 @@ namespace ParkeringsDataAPI.Models
     public partial class Log
     {
         [Key]
+        public int OmrådeId { get; set; }
+        [Key]
         [Column(TypeName = "datetime")]
         public DateTime Tidspunkt { get; set; }
         public bool? Retning { get; set; }
         public int? Nedbør { get; set; }
         public int? Temperatur { get; set; }
         public int? Vindhastighed { get; set; }
+
+        [ForeignKey(nameof(OmrådeId))]
+        [InverseProperty(nameof(Parkeringsområde.Logs))]
+        public virtual Parkeringsområde Område { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                if (obj is Log)
+                {
+                    Log log = (Log)obj;
+                    if (this.Tidspunkt == log.Tidspunkt && this.OmrådeId == log.OmrådeId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return base.Equals(obj);
+        }
     }
 }

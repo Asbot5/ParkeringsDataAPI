@@ -14,6 +14,7 @@ namespace ParkeringsDataAPI.Models
     {
         public Parkeringsområde()
         {
+            Logs = new HashSet<Log>();
             SpecielleParkeringsPladsers = new HashSet<SpecielleParkeringsPladser>();
         }
 
@@ -22,6 +23,8 @@ namespace ParkeringsDataAPI.Models
         public int Pladser { get; set; }
         public int OptagedePladser { get; set; }
 
+        [InverseProperty(nameof(Log.Område))]
+        public virtual ICollection<Log> Logs { get; set; }
         [InverseProperty(nameof(SpecielleParkeringsPladser.Område))]
         public virtual ICollection<SpecielleParkeringsPladser> SpecielleParkeringsPladsers { get; set; }
     }
