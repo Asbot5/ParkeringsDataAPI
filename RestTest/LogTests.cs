@@ -110,45 +110,52 @@ namespace RestTest
         }
         #endregion
         #region Get
-        [TestMethod]
-        public void LogTestGetPositive()
-        {
-            Log log = new Log();
-            log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
-            log.Nedbør = 0;
-            log.Temperatur = 0;
-            log.Vindhastighed = 0;
-            log.Retning = false;
-            LogManager.Add(log);
-            Log getlog = LogManager.Get(log.OmrådeId, log.Tidspunkt);
-            Assert.AreEqual(log, getlog);
-        }
+        //[TestMethod]
+        //public void LogTestGetPositive()
+        //{
+        //    Log log = new Log();
+        //    log.Tidspunkt = DateTime.Now;
+        //    log.OmrådeId = 0;
+        //    log.Nedbør = 0;
+        //    log.Temperatur = 0;
+        //    log.Vindhastighed = 0;
+        //    log.Retning = false;
+        //    LogManager.Add(log);
+        //    Log getlog = LogManager.Get(log.OmrådeId, log.Tidspunkt);
+        //    Assert.AreEqual(log, getlog);
+        //}
 
+        //[TestMethod]
+        //[ExpectedException((typeof(ArgumentNullException)))]
+        //public void LogTestGetOmrådeNotNull()
+        //{
+        //    LogManager.Get(null, DateTime.Now);
+        //}
+        //[TestMethod]
+        //[ExpectedException((typeof(ArgumentNullException)))]
+        //public void LogTestGetDateTimeNotNull()
+        //{
+        //    LogManager.Get(0, null);
+        //}
+        //[TestMethod]
+        //[ExpectedException((typeof(ArgumentNullException)))]
+        //public void LogTestGetDateTimeInRange()
+        //{
+        //    LogManager.Get(0, DateTime.MinValue);
+        //}
+        //[TestMethod]
+        //[ExpectedException((typeof(ArgumentNullException)))]
+        //public void LogTestGetOmrådeExists()
+        //{
+        //    LogManager.Get(int.MaxValue, DateTime.Now);
+        //}
+        #endregion
+        #region GetStatistic
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetOmrådeNotNull()
+        public void LogTestGetStatistic()
         {
-            LogManager.Get(null, DateTime.Now);
+            Assert.IsNotNull(LogManager.GetStatistic(DateTime.Now.Date, 1));
         }
-        [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetDateTimeNotNull()
-        {
-            LogManager.Get(0, null);
-        }
-        [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetDateTimeInRange()
-        {
-            LogManager.Get(0, DateTime.MinValue);
-        }
-        [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetOmrådeExists()
-        {
-            LogManager.Get(int.MaxValue, DateTime.Now);
-        }
-#endregion
+        #endregion
     }
 }
