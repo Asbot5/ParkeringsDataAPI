@@ -11,7 +11,7 @@ namespace RestTest
     {
         #region Add
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddOmrådeNotNull()
         {
             Log log = new Log();
@@ -23,7 +23,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddDateTimeNotNull()
         {
             Log log = new Log();
@@ -35,7 +35,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddRetningNotNull()
         {
             Log log = new Log();
@@ -47,6 +47,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddPositive()
         {
             Log log = new Log();
@@ -63,7 +64,7 @@ namespace RestTest
         }
 
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddNedbørNotNegative()
         {
             Log log = new Log();
@@ -76,7 +77,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddVindhastighedNotNegative()
         {
             Log log = new Log();
@@ -89,7 +90,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddOmrådeIdNotNegative()
         {
             Log log = new Log();
