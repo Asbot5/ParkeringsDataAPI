@@ -25,7 +25,7 @@ namespace ParkeringsDataAPI.Managers
                 throw new ArgumentException("Time can not be null");
             }
 
-            if (log.OmrådeId == null || log.OmrådeId < 0)
+            if (log.OmrådeId == null || log.OmrådeId <= 0)
             {
                 throw new ArgumentException("OmrådeId can not be null or negative");
             }
