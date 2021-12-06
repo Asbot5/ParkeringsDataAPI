@@ -68,7 +68,7 @@ namespace RestTest {
         #endregion
         #region GetAll
         [TestMethod]
-        public void LogTestGetAllPositive() {
+        public void ParkeringsområdeTestGetAllPositive() {
             Assert.IsNotNull(ParkeringsOmrådeManager.GetAll());
         }
         #endregion
