@@ -63,7 +63,7 @@ namespace RestTest
         }
 
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddNedbørNotNegative()
         {
             Log log = new Log();
@@ -76,7 +76,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddVindhastighedNotNegative()
         {
             Log log = new Log();
@@ -89,7 +89,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddOmrådeIdNotNegative()
         {
             Log log = new Log();
@@ -138,13 +138,13 @@ namespace RestTest
             LogManager.Get(0, null);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestGetDateTimeInRange()
         {
             LogManager.Get(0, DateTime.MinValue);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentNullException)))]
+        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestGetOmrådeExists()
         {
             LogManager.Get(int.MaxValue, DateTime.Now);

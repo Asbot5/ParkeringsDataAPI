@@ -1,0 +1,98 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ParkeringsDataAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RestTest {
+    [TestClass]
+    public class ParkeringsområdeTests {
+        #region Add
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentNullException)))]
+        public void ParkeringsområdeTestAddPladserNotNull() {
+            Parkeringsområde po = new Parkeringsområde();
+            //po.Pladser = 10;
+            po.OptagedePladser = 5;
+            ParkeringsOmrådeManager.Add(po);
+        }
+
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentNullException)))]
+        public void ParkeringsområdeTestAddOptagedePladserNotNull() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = 10;
+            //po.OptagedePladser = 5;
+            ParkeringsOmrådeManager.Add(po);
+        }
+
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentException)))]
+        public void ParkeringsområdeTestAddPladserNotNegative() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = -10;
+            po.OptagedePladser = 5;
+            ParkeringsOmrådeManager.Add(po);
+        }
+
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentException)))]
+        public void ParkeringsområdeTestAddOptagedePladserNotNegative() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = 10;
+            po.OptagedePladser = -5;
+            ParkeringsOmrådeManager.Add(po);
+        }
+
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentException)))]
+        public void ParkeringsområdeTestAddPladserBiggerThanOptagedePladser() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = 5;
+            po.OptagedePladser = 10;
+            ParkeringsOmrådeManager.Add(po);
+        }
+
+        [TestMethod]
+        public void ParkeringsområdeTestAddPositive() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = 10;
+            po.OptagedePladser = 5;
+            int i = ParkeringsOmrådeManager.GetAll().Count();
+            ParkeringsOmrådeManager.Add(po);
+            int j = ParkeringsOmrådeManager.GetAll().Count();
+            Assert.AreEqual(i + 1, j);
+        }
+        #endregion
+        #region GetAll
+        [TestMethod]
+        public void LogTestGetAllPositive() {
+            Assert.IsNotNull(ParkeringsOmrådeManager.GetAll());
+        }
+        #endregion
+        #region Get
+        [TestMethod]
+        public void ParkeringsområdeTestGetPositive() {
+            Parkeringsområde po = new Parkeringsområde();
+            po.Pladser = 10;
+            po.OptagedePladser = 5;
+            int id = ParkeringsområdeManager.Add(po);
+            Parkeringsområde getpo = ParkeringsområdeManager.Get(id);
+            Assert.IsTrue(po.Pladser == getpo.Pladser && po.OptagedePladser == getpo.OptagedePladser);
+        }
+
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentNullException)))]
+        public void ParkeringsområdeTestGetIdNotNull() {
+            ParkeringsområdeManager.Get(null);
+        }
+        [TestMethod]
+        [ExpectedException((typeof(ArgumentException)))]
+        public void ParkeringsområdeTestGetIdNotNegative() {
+            ParkeringsområdeManager.Get(-1);
+        }
+        #endregion
+    }
+}
