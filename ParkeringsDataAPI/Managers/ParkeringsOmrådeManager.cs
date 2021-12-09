@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RestTest
-{
-    public static class ParkeringsOmrådeManager
+namespace ParkeringsDataAPI.Managers {
+    public static class ParkeringsområdeManager
     {
         private static ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
 
@@ -58,6 +57,14 @@ namespace RestTest
                 throw new ArgumentException("Id can't be negative");
             }
             return _db.Parkeringsområdes.Find(id);
+        }
+
+        public static List<int> GetActiveIds() {
+            List<int> ints = new List<int>();
+            foreach(Parkeringsområde po in _db.Parkeringsområdes) {
+                ints.Add(po.Id);
+            }
+            return ints;
         }
     }
 }

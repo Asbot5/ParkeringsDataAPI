@@ -18,23 +18,18 @@ namespace ParkeringsDataAPI.Managers
         {
             return _db.Logs.ToList();
         }
-        
-        public static Log Get(int? områdeId, DateTime? dateTime) {
-            if(områdeId == null) {
-                throw new ArgumentNullException("");
-            } else if (dateTime == null) {
-                throw new ArgumentNullException("");
+
+        public static Log Get(int områdeId, DateTime dateTime) {
+            if (områdeId == default(int)) {
+                throw new ArgumentNullException("OmrådeId can't be undefined");
+            } else if (dateTime == default(DateTime)) {
+                throw new ArgumentNullException("A date can't be undefined");
             } else if (dateTime < DateTime.Parse("2021-01-01T12:00:00")) {
-                throw new ArgumentException("");
+                throw new ArgumentException("No data before 2021");
             } else if (områdeId < 0) {
-                throw new ArgumentException("");
-
-
-        public static void Add(Log log)
-        {
-            if (log.Tidspunkt == null)
-            {
-                throw new ArgumentException("Time can not be null");
+                throw new ArgumentException("OmrådeId can't be negative.");
+            } else if(!ParkeringsområdeManager.GetActiveIds().Contains(områdeId)) {
+                throw new ArgumentException("OmrådeId must be equal to the id of a \"Parkeringsområde\" object.");
             }
 
             List<Log> list = _db.Logs.ToList();
@@ -50,8 +45,10 @@ namespace ParkeringsDataAPI.Managers
         {
             if (log.Tidspunkt == default(DateTime)) {
                 throw new ArgumentNullException("Time can not be null");
-            } else if (log.OmrådeId == default(int) || log.OmrådeId <= 0) {
-                throw new ArgumentNullException("OmrådeId can not be null or negative");
+            } else if (log.OmrådeId == default(int)) {
+                throw new ArgumentNullException("OmrådeId can not be undefined");
+            } else if (log.OmrådeId < 0) {
+                throw new ArgumentException("OmrådeId can not be negative");
             } else if (log.Nedbør < 0) {
                 throw new ArgumentException("The sky does not vacuum");
             } else if (log.Vindhastighed < 0) {
@@ -96,36 +93,5 @@ namespace ParkeringsDataAPI.Managers
             //var statistic = _db.Logs.Where(i => i.Tidspunkt == dato.Date).ToList();
             //return statistic;
         }
-
-        public static Log Get(int? oId, DateTime? date)
-        {
-            if (oId == null)
-            {
-                throw new ArgumentNullException("OmrådeId can't be null");
-            }
-
-            if (date == null)
-            {
-                throw new ArgumentNullException("A date can't be null");
-            }
-
-            if (oId < 0)
-            {
-                throw new ArgumentException("OmrådeId can't be negative.");
-            }
-            
-
-            return null;
-        }
-
-        public static Log GetOmråde(int område, DateTime date)
-        {
-            if (område == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            return null;
-        } 
     }
 }

@@ -11,7 +11,7 @@ namespace RestTest
     {
         #region Add
         [TestMethod]
-        [ExpectedException((typeof(ArgumentException)))]
+        [ExpectedException((typeof(ArgumentNullException)))]
         public void LogTestAddOmrådeNotNull()
         {
             Log log = new Log();
@@ -23,7 +23,7 @@ namespace RestTest
             LogManager.Add(log);
         }
         [TestMethod]
-        [ExpectedException((typeof(ArgumentException)))]
+        [ExpectedException((typeof(ArgumentNullException)))]
         public void LogTestAddDateTimeNotNull()
         {
             Log log = new Log();
@@ -52,7 +52,6 @@ namespace RestTest
         */
 
         [TestMethod]
-        [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddPositive()
         {
             Log log = new Log();
@@ -125,25 +124,21 @@ namespace RestTest
             log.Temperatur = 0;
             log.Vindhastighed = 0;
             log.Retning = false;
+            int i = LogManager.GetAll().Count();
             LogManager.Add(log);
-            Assert.AreEqual(LogManager.GetAll().Count, (counts + 1));
+            Assert.AreEqual(LogManager.GetAll().Count, i + 1);
         }
 
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
         public void LogTestGetOmrådeNotNull()
         {
-            int? oId = 0;
-            if (oId == 0)
-            {
-                oId = null;
-            }
-            LogManager.Get(oId, DateTime.Now);
+            LogManager.Get(default(int), DateTime.Now);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
         public void LogTestGetDateTimeNotNull() {
-            LogManager.Get(GetOmrådeID(), null);
+            LogManager.Get(GetOmrådeID(), default(DateTime));
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
@@ -153,7 +148,7 @@ namespace RestTest
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
         public void LogTestGetDateTimeInRange() {
-            LogManager.Get(GetOmrådeID(), DateTime.MinValue);
+            LogManager.Get(GetOmrådeID(), DateTime.MinValue.AddYears(1));
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
@@ -170,7 +165,7 @@ namespace RestTest
         #endregion
 
 
-        private static int GetOmrådeID() {
+        public static int GetOmrådeID() {
             return ParkeringsområdeManager.GetActiveIds()[0];
         }
     }
