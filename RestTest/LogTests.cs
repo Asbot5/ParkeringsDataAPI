@@ -27,32 +27,37 @@ namespace RestTest
         public void LogTestAddDateTimeNotNull()
         {
             Log log = new Log();
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Nedbør = 0;
             log.Retning = false;
             log.Temperatur = 0;
             log.Vindhastighed = 0;
             LogManager.Add(log);
         }
+
+        // There is no way to test if it hasn't been defined.
+        /*
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddRetningNotNull()
         {
             Log log = new Log();
             log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Nedbør = 0;
             log.Temperatur = 0;
             log.Vindhastighed = 0;
             LogManager.Add(log);
         }
+        */
+
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
         public void LogTestAddPositive()
         {
             Log log = new Log();
             log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Nedbør = 0;
             log.Temperatur = 0;
             log.Vindhastighed = 0;
@@ -69,7 +74,7 @@ namespace RestTest
         {
             Log log = new Log();
             log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Retning = false;
             log.Nedbør = -10;
             log.Temperatur = 0;
@@ -82,7 +87,7 @@ namespace RestTest
         {
             Log log = new Log();
             log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Retning = false;
             log.Nedbør = 0;
             log.Temperatur = 0;
@@ -115,7 +120,7 @@ namespace RestTest
         public void LogTestGetPositive() {
             Log log = new Log();
             log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
+            log.OmrådeId = GetOmrådeID();
             log.Nedbør = 0;
             log.Temperatur = 0;
             log.Vindhastighed = 0;
@@ -133,7 +138,7 @@ namespace RestTest
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
         public void LogTestGetDateTimeNotNull() {
-            LogManager.Get(0, null);
+            LogManager.Get(GetOmrådeID(), null);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
@@ -143,7 +148,7 @@ namespace RestTest
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
         public void LogTestGetDateTimeInRange() {
-            LogManager.Get(0, DateTime.MinValue);
+            LogManager.Get(GetOmrådeID(), DateTime.MinValue);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
@@ -158,5 +163,10 @@ namespace RestTest
             Assert.IsNotNull(LogManager.GetStatistic(DateTime.Now.Date, 1));
         }
         #endregion
+
+
+        private static int GetOmrådeID() {
+            return ParkeringsområdeManager.GetActiveIds()[0];
+        }
     }
 }

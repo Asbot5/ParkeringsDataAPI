@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ParkeringsDataAPI.Managers;
 using ParkeringsDataAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             //po.Pladser = 10;
             po.OptagedePladser = 5;
-            ParkeringsOmrådeManager.Add(po);
+            ParkeringsområdeManager.Add(po);
         }
 
         [TestMethod]
@@ -25,7 +26,7 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             po.Pladser = 10;
             //po.OptagedePladser = 5;
-            ParkeringsOmrådeManager.Add(po);
+            ParkeringsområdeManager.Add(po);
         }
 
         [TestMethod]
@@ -34,7 +35,7 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             po.Pladser = -10;
             po.OptagedePladser = 5;
-            ParkeringsOmrådeManager.Add(po);
+            ParkeringsområdeManager.Add(po);
         }
 
         [TestMethod]
@@ -43,7 +44,7 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             po.Pladser = 10;
             po.OptagedePladser = -5;
-            ParkeringsOmrådeManager.Add(po);
+            ParkeringsområdeManager.Add(po);
         }
 
         [TestMethod]
@@ -52,7 +53,7 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             po.Pladser = 5;
             po.OptagedePladser = 10;
-            ParkeringsOmrådeManager.Add(po);
+            ParkeringsområdeManager.Add(po);
         }
 
         [TestMethod]
@@ -60,16 +61,16 @@ namespace RestTest {
             Parkeringsområde po = new Parkeringsområde();
             po.Pladser = 10;
             po.OptagedePladser = 5;
-            int i = ParkeringsOmrådeManager.GetAll().Count();
-            ParkeringsOmrådeManager.Add(po);
-            int j = ParkeringsOmrådeManager.GetAll().Count();
+            int i = ParkeringsområdeManager.GetAll().Count();
+            ParkeringsområdeManager.Add(po);
+            int j = ParkeringsområdeManager.GetAll().Count();
             Assert.AreEqual(i + 1, j);
         }
         #endregion
         #region GetAll
         [TestMethod]
         public void ParkeringsområdeTestGetAllPositive() {
-            Assert.IsNotNull(ParkeringsOmrådeManager.GetAll());
+            Assert.IsNotNull(ParkeringsområdeManager.GetAll());
         }
         #endregion
         #region Get

@@ -17,7 +17,7 @@ namespace ParkeringsDataAPI.Models
         [Key]
         [Column(TypeName = "datetime")]
         public DateTime Tidspunkt { get; set; }
-        public bool? Retning { get; set; }
+        public bool Retning { get; set; }
         public int? Nedbør { get; set; }
         public int? Temperatur { get; set; }
         public int? Vindhastighed { get; set; }

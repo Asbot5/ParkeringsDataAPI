@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParkeringsDataAPI.Models;
+using ParkeringsDataAPI.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

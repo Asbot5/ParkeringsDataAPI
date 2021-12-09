@@ -17,33 +17,39 @@ namespace ParkeringsDataAPI.Managers
         {
             return _db.Logs.ToList();
         }
+        
+        public static Log Get(int? områdeId, DateTime? dateTime) {
+            if(områdeId == null) {
+                throw new ArgumentNullException("");
+            } else if (dateTime == null) {
+                throw new ArgumentNullException("");
+            } else if (dateTime < DateTime.Parse("2021-01-01T12:00:00")) {
+                throw new ArgumentException("");
+            } else if (områdeId < 0) {
+                throw new ArgumentException("");
+            }
+
+            List<Log> list = _db.Logs.ToList();
+            foreach(Log log in list) {
+                if(log.OmrådeId == områdeId && log.Tidspunkt == dateTime) {
+                    return log;
+                }
+            }
+            return null;
+        }
 
         public static void Add(Log log)
         {
-            if (log.Tidspunkt == null)
-            {
-                throw new ArgumentException("Time can not be null");
-            }
-
-            if (log.OmrådeId == null || log.OmrådeId <= 0)
-            {
-                throw new ArgumentException("OmrådeId can not be null or negative");
-            }
-
-            if (log.Retning == null)
-            {
-                throw new ArgumentException("Retning must be defined");
-            }
-
-            if (log.Nedbør < 0)
-            {
+            if (log.Tidspunkt == default(DateTime)) {
+                throw new ArgumentNullException("Time can not be null");
+            } else if (log.OmrådeId == default(int) || log.OmrådeId <= 0) {
+                throw new ArgumentNullException("OmrådeId can not be null or negative");
+            } else if (log.Nedbør < 0) {
                 throw new ArgumentException("The sky does not vacuum");
-            }
-
-            if (log.Vindhastighed < 0)
-            {
+            } else if (log.Vindhastighed < 0) {
                 throw new ArgumentException("Windspeed can not be below 0");
             }
+
             _db.Add(log);
         }
         //Dato bliver givet i form af Amerikansk Standard af en eller anden grund så husk at skrive dato ind som MM-dd-yyyy
