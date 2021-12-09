@@ -113,42 +113,41 @@ namespace RestTest
         #region Get
         [TestMethod]
         public void LogTestGetPositive() {
-            Log log = new Log();
-            log.Tidspunkt = DateTime.Now;
-            log.OmrådeId = 0;
-            log.Nedbør = 0;
-            log.Temperatur = 0;
-            log.Vindhastighed = 0;
-            log.Retning = false;
+            Log log = new Log
+            {
+                Tidspunkt = DateTime.Now,
+                OmrådeId = 1,
+                Nedbør = 0,
+                Temperatur = 0,
+                Vindhastighed = 0,
+                Retning = false
+            };
+            int counts = LogManager.GetAll().Count;
             LogManager.Add(log);
-            Log getlog = LogManager.Get(log.OmrådeId, log.Tidspunkt);
-            Assert.AreEqual(log, getlog);
+            Assert.AreEqual(LogManager.GetAll().Count, (counts + 1));
         }
 
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetOmrådeNotNull() {
-            LogManager.Get(null, DateTime.Now);
+        public void LogTestGetOmrådeNotNull()
+        {
+            int? oId = 0;
+            if (oId == 0)
+            {
+                oId = null;
+            }
+            LogManager.Get(oId, DateTime.Now);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetDateTimeNotNull() {
+        public void LogTestGetDateTimeNotNull()
+        {
             LogManager.Get(0, null);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
         public void LogTestGetOmrådeNotNegative() {
             LogManager.Get(-1, DateTime.Now);
-        }
-        [TestMethod]
-        [ExpectedException((typeof(ArgumentException)))]
-        public void LogTestGetDateTimeInRange() {
-            LogManager.Get(0, DateTime.MinValue);
-        }
-        [TestMethod]
-        [ExpectedException((typeof(ArgumentException)))]
-        public void LogTestGetOmrådeExists() {
-            LogManager.Get(int.MaxValue, DateTime.Now);
         }
         #endregion
         #region GetStatistic

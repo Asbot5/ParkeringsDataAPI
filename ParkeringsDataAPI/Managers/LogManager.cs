@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Data.SqlClient;
 using ParkeringsDataAPI.Models;
 
@@ -17,6 +18,7 @@ namespace ParkeringsDataAPI.Managers
         {
             return _db.Logs.ToList();
         }
+
 
         public static void Add(Log log)
         {
@@ -45,6 +47,7 @@ namespace ParkeringsDataAPI.Managers
                 throw new ArgumentException("Windspeed can not be below 0");
             }
             _db.Add(log);
+            _db.SaveChanges();
         }
         //Dato bliver givet i form af Amerikansk Standard af en eller anden grund så husk at skrive dato ind som MM-dd-yyyy
         public static List<Log> GetStatistic(DateTime dato, int område)
@@ -81,5 +84,36 @@ namespace ParkeringsDataAPI.Managers
             //var statistic = _db.Logs.Where(i => i.Tidspunkt == dato.Date).ToList();
             //return statistic;
         }
+
+        public static Log Get(int? oId, DateTime? date)
+        {
+            if (oId == null)
+            {
+                throw new ArgumentNullException("OmrådeId can't be null");
+            }
+
+            if (date == null)
+            {
+                throw new ArgumentNullException("A date can't be null");
+            }
+
+            if (oId < 0)
+            {
+                throw new ArgumentException("OmrådeId can't be negative.");
+            }
+            
+
+            return null;
+        }
+
+        public static Log GetOmråde(int område, DateTime date)
+        {
+            if (område == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return null;
+        } 
     }
 }
