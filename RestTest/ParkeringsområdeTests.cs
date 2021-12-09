@@ -19,6 +19,8 @@ namespace RestTest {
             ParkeringsområdeManager.Add(po);
         }
 
+        // Since default of int is 0, then this cannot be checked.
+        /*
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
         public void ParkeringsområdeTestAddOptagedePladserNotNull() {
@@ -27,6 +29,7 @@ namespace RestTest {
             //po.OptagedePladser = 5;
             ParkeringsområdeManager.Add(po);
         }
+        */
 
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
@@ -88,7 +91,7 @@ namespace RestTest {
         [ExpectedException((typeof(ArgumentNullException)))]
         public void ParkeringsområdeTestGetIdNotNull()
         {
-            ParkeringsområdeManager.Get(null);
+            ParkeringsområdeManager.Get(default(int));
         }
 
         [TestMethod]

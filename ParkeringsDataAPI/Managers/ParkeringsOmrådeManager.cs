@@ -1,67 +1,56 @@
-﻿using ParkeringsDataAPI.Models;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using ParkeringsDataAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ParkeringsDataAPI.Managers {
-    public static class ParkeringsområdeManager
-    {
+    public static class ParkeringsområdeManager {
+
         private static ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
 
-        private static string ConnectionString =
-            "Data Source=emilzealanddb.database.windows.net;Initial Catalog=ParkeringsDataDb;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        public static void Add(Parkeringsområde po)
-        {
-            if (po.OptagedePladser == 0)
-            {
-                throw new ArgumentNullException("Optagede pladser cant be null");
+        public static int Add(Parkeringsområde po) {
+            if (po.Pladser == default(int)) {
+                throw new ArgumentNullException("Pladser can not be undefined");
+            } else if (po.Pladser < 0) {
+                throw new ArgumentException("Pladser can not be negative");
+            } else if (po.OptagedePladser < 0) {
+                throw new ArgumentException("OptagedePladser can not be negative");
+            } else if (po.OptagedePladser > po.Pladser) {
+                throw new ArgumentException("OptagedePladser must be less than Pladser");
             }
 
-            if (po.Pladser == 0)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (po.Pladser < 0)
-            {
-                throw new ArgumentException("Pladser can't be negative");
-            }
-            if (po.OptagedePladser < 0)
-            {
-                throw new ArgumentException("OptagedePladser can't be negative");
-            }
-
-            if (po.OptagedePladser > po.Pladser)
-            {
-                throw new ArgumentException("OptagedePladser can't be larger than Pladser");
-            }
-
-            _db.Add(po);
+            EntityEntry<Parkeringsområde> newPo = _db.Parkeringsområdes.Add(po);
             _db.SaveChanges();
+            return newPo.Entity.Id;
         }
 
-        public static List<Parkeringsområde> GetAll()
-        {
+        public static List<Parkeringsområde> GetAll() {
             return _db.Parkeringsområdes.ToList();
         }
 
-        public static Parkeringsområde Get(int? id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id can't be null");
+        public static Parkeringsområde Get(int id) {
+            if (id == default(int)) {
+                throw new ArgumentNullException("Id can't be undefined");
+            } else if (id < 0) {
+                throw new ArgumentException("Id can't be negative.");
             }
 
-            if (id < 0)
-            {
-                throw new ArgumentException("Id can't be negative");
+            List<Parkeringsområde> list = _db.Parkeringsområdes.ToList();
+            foreach (Parkeringsområde po in list) {
+                if (po.Id == id) {
+                    return po;
+                }
             }
-            return _db.Parkeringsområdes.Find(id);
+            return null;
         }
 
         public static List<int> GetActiveIds() {
+            List<Parkeringsområde> pos = _db.Parkeringsområdes.ToList();
+
             List<int> ints = new List<int>();
-            foreach(Parkeringsområde po in _db.Parkeringsområdes) {
+            foreach(Parkeringsområde po in pos) {
                 ints.Add(po.Id);
             }
             return ints;
