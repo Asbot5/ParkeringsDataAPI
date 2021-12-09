@@ -126,14 +126,19 @@ namespace RestTest
             log.Vindhastighed = 0;
             log.Retning = false;
             LogManager.Add(log);
-            Log getlog = LogManager.Get(log.OmrådeId, log.Tidspunkt);
-            Assert.AreEqual(log, getlog);
+            Assert.AreEqual(LogManager.GetAll().Count, (counts + 1));
         }
 
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
-        public void LogTestGetOmrådeNotNull() {
-            LogManager.Get(null, DateTime.Now);
+        public void LogTestGetOmrådeNotNull()
+        {
+            int? oId = 0;
+            if (oId == 0)
+            {
+                oId = null;
+            }
+            LogManager.Get(oId, DateTime.Now);
         }
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]

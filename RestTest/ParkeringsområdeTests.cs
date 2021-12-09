@@ -15,7 +15,6 @@ namespace RestTest {
         [ExpectedException((typeof(ArgumentNullException)))]
         public void ParkeringsområdeTestAddPladserNotNull() {
             Parkeringsområde po = new Parkeringsområde();
-            //po.Pladser = 10;
             po.OptagedePladser = 5;
             ParkeringsområdeManager.Add(po);
         }
@@ -75,24 +74,28 @@ namespace RestTest {
         #endregion
         #region Get
         [TestMethod]
-        public void ParkeringsområdeTestGetPositive() {
-            Parkeringsområde po = new Parkeringsområde();
+        public void ParkeringsområdeTestGetPositive()
+        {
+            Parkeringsområde po = new();
             po.Pladser = 10;
             po.OptagedePladser = 5;
-            int id = ParkeringsområdeManager.Add(po);
-            Parkeringsområde getpo = ParkeringsområdeManager.Get(id);
+            ParkeringsOmrådeManager.Add(po);
+            Parkeringsområde getpo = ParkeringsOmrådeManager.Get(po.Id);
             Assert.IsTrue(po.Pladser == getpo.Pladser && po.OptagedePladser == getpo.OptagedePladser);
         }
 
         [TestMethod]
         [ExpectedException((typeof(ArgumentNullException)))]
-        public void ParkeringsområdeTestGetIdNotNull() {
-            ParkeringsområdeManager.Get(null);
+        public void ParkeringsområdeTestGetIdNotNull()
+        {
+            ParkeringsOmrådeManager.Get(null);
         }
+
         [TestMethod]
         [ExpectedException((typeof(ArgumentException)))]
-        public void ParkeringsområdeTestGetIdNotNegative() {
-            ParkeringsområdeManager.Get(-1);
+        public void ParkeringsområdeTestGetIdNotNegative()
+        {
+            ParkeringsOmrådeManager.Get(-1);
         }
         #endregion
     }
