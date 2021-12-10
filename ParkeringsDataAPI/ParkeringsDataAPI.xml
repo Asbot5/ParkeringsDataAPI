@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParkeringsDataAPI</name>
+    </assembly>
+    <members>
+        <member name="M:ParkeringsDataAPI.Controllers.LogController.GetAll">
+            <summary>
+            Gets all logs
+            </summary>
+            <returns>A list of logs</returns>
+        </member>
+        <member name="M:ParkeringsDataAPI.Controllers.LogController.GetAll(System.DateTime,System.Int32)">
+            <summary>
+            Gets all logfiles for the date in the time 00:00 - 23:59 in specific area
+            </summary>
+            <param name="dato">The date of which you want the logfile</param>
+            <param name="område">The area you want the logfile from</param>
+            <returns>A list of logfiles</returns>
+        </member>
+        <member name="M:ParkeringsDataAPI.Controllers.ParkingDatumsController.GetAll">
+            <summary>
+            Get's a list of all the parking areas.
+            </summary>
+            <returns>The parking areas to a list</returns>
+        </member>
+        <member name="M:ParkeringsDataAPI.Controllers.ParkingDatumsController.GetAllSpecial">
+            <summary>
+            Gets a list of all the special parking areas
+            </summary>
+            <returns>The special parking areas to a list</returns>
+        </member>
+        <member name="M:ParkeringsDataAPI.Controllers.ParkingDatumsController.GetSpecialById(System.Int32)">
+            <summary>
+            Makes you able to retrieve a special parking area in the api from the id.
+            </summary>
+            <param name="område">The area int you want</param>
+            <returns>A list of the specified area from the id.</returns>
+        </member>
+    </members>
+</doc>

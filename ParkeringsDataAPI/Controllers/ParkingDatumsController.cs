@@ -19,12 +19,20 @@ namespace ParkeringsDataAPI.Controllers
     {
         private ParkeringsdatadbContext _db = new ParkeringsdatadbContext();
 
+        /// <summary>
+        /// Get's a list of all the parking areas.
+        /// </summary>
+        /// <returns>The parking areas to a list</returns>
         [HttpGet]
         public List<Parkeringsområde> GetAll()
         {
             return _db.Parkeringsområdes.ToList();
         }
 
+        /// <summary>
+        /// Gets a list of all the special parking areas
+        /// </summary>
+        /// <returns>The special parking areas to a list</returns>
         [Route("Special")]
         [HttpGet]
         public List<SpecielleParkeringsPladser> GetAllSpecial()
@@ -32,6 +40,11 @@ namespace ParkeringsDataAPI.Controllers
             return _db.SpecielleParkeringsPladsers.ToList();
         }
 
+        /// <summary>
+        /// Makes you able to retrieve a special parking area in the api from the id.
+        /// </summary>
+        /// <param name="område">The area int you want</param>
+        /// <returns>A list of the specified area from the id.</returns>
         [Route("Special/{område}")]
         [HttpGet]
         public List<SpecielleParkeringsPladser> GetSpecialById(int område)
